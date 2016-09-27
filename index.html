@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>toDoList</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="toDo.js"></script>
+	<link rel="stylesheet" type="text/css" href="toDo.css">
+</head>
+<body>
+	
+	<div ng-app='toDoList'>
+	  <div id='toDoList' ng-controller='toDoCtrl'>
+	    <header>
+	      <form ng-submit='submit()'>
+	        <h3>To Do List</h3>
+	        <input type='text' ng-model='toDoInput' placeholder='Enter something to do.'>
+	        <input id='addBtn' type='submit' value='Add'>
+	      </form>
+	    </header>
+
+	    <section>
+	      <div ng-show='toDoArr.length'>
+	        <div>
+	          <input id='alldone' type='checkbox' ng-model='allDone' ng-click='allDoneFunc()'>All Done
+	        </div>
+	        <table>
+	          <tr>
+	            <th>Id</th>
+	            <th>Subject</th>
+	            <th>Completed?</th>
+	          </tr>
+	          <tr ng-repeat='item in toDoArr'>
+	            <td><input type='checkbox' ng-model='item.done'>
+	                <span>{{$index+1}}.</span>
+	            </td>
+	            <td ng-dblclick='edit(item)'>
+	              <div ng-hide='item.editing'>
+	                <span class='done-{{item.done}}'>{{item.title}}</span>
+	              </div>
+
+	              <div ng-show='item.editing'>
+	                <input type='text' ng-model='item.title' ng-keyup='doneEdit(item)'>
+	              </div>
+	            </td> 
+	            <td>
+	              <span>{{item.done}}<span class='right' ng-click='delete2(item)'>x</span></span>
+	            </td>
+	          </tr>
+	        </table>
+	      </div>
+	    </section>
+
+	    <footer>
+	      <div id='countLeft' ng-show='toDoArr.length'>
+	        <p>{{countLeft()}} left to be done.</p>
+	        <p>{{toDoArr.length-countLeft()}} completed.</p>
+	      </div>
+	      <!-- <div ng-show='toDoArr.length != countLeft()'>
+	        <button ng-click='delete()'>Delete {{toDoArr.length-countLeft()}} {{itemText()}}</button>
+	      </div> -->
+	    </footer>
+	  </div>
+	</div>
+
+
+</body>
+</html>
